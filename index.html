@@ -55,10 +55,10 @@
   /* section heads */
   .sec{padding:84px 0}
   .sec-head{text-align:center; margin-bottom:56px}
-  .sec-head p{color:var(--muted); max-width:52em; margin:16px auto 0}
+  .sec-head p{color:var(--muted); max-width:68em; margin:16px auto 0}
 
   /* how it works */
-  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:34px}
+  .steps{display:grid; grid-template-columns:repeat(2,1fr); gap:48px 56px; max-width:920px; margin:0 auto}
   .scene{height:196px; display:flex; align-items:center; justify-content:center; margin-bottom:20px}
   .num{color:var(--muted); font-weight:600; margin-bottom:6px}
   .step h3{font-size:15px; margin-bottom:6px}
@@ -83,16 +83,22 @@
   .cnr.br{right:15px; bottom:15px; border-right:2px solid var(--accent); border-bottom:2px solid var(--accent)}
 
   /* gallery */
-  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:30px 26px}
-  .card .glow{height:296px; display:flex; align-items:center; justify-content:center; background:var(--plate); border-radius:14px}
-  .card .glow img{width:250px; height:250px; object-fit:contain}
-  .lab{color:var(--muted); margin:16px 0 4px}
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px 26px}
+  .card .glow{height:272px; display:flex; align-items:center; justify-content:center; background:var(--plate); border-radius:14px}
+  .card .glow img{width:266px; height:266px; object-fit:contain}
+  .lab{color:var(--muted); margin:12px 0 4px}
   .txt{color:var(--ink); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
 
   /* footer */
   footer{border-top:1px solid rgba(37,49,63,.6); padding:64px 0}
   .foot{display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap}
   .foot .muted{max-width:32em}
+
+  /* PC: each section is exactly one screen tall, content vertically centred */
+  @media(min-width:901px){
+    .sec{min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding-top:40px; padding-bottom:40px}
+    .sec-head{margin-bottom:44px}
+  }
 
   @media(max-width:900px){
     .hero{grid-template-columns:1fr; padding:40px 0 56px}
@@ -123,9 +129,9 @@
   <div class="wrap nav">
     <a href="#top" class="logo"><span class="dot"></span>ORBLY</a>
     <nav class="links">
-      <a href="#gallery">Gallery</a>
+      <a href="#top">orbly.to</a>
       <a href="#how">How it works</a>
-      <span class="muted">orbly.to</span>
+      <a href="#gallery">Gallery</a>
     </nav>
   </div>
 </header>
