@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orbly — say what you mean</title>
+<meta name="description" content="Any message becomes a circular glyph — a key only a scan can open. Print it on a tee, a wall, a tote, a card.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  /* ONE font · display + 15px text · two text colours · orange on non-text only */
+  :root{
+    --bg:#0B1018; --ink:#E9EDF2; --muted:#8B95A4;
+    --panel:#121A26; --line:#25313F; --plate:#EEF1F6; --accent:#E86A2E; --accent-hi:#F27E3E;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'IBM Plex Sans',system-ui,-apple-system,sans-serif; font-size:15px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--ink); text-decoration:none}
+  img{max-width:100%; display:block}
+  .wrap{max-width:1240px; margin:0 auto; padding:0 32px}
+
+  /* nav */
+  header{position:sticky; top:0; z-index:20; background:rgba(11,16,24,.82); backdrop-filter:blur(10px); border-bottom:1px solid rgba(37,49,63,.6)}
+  .nav{display:flex; justify-content:space-between; align-items:center; height:72px}
+  .logo{display:flex; align-items:center; gap:11px; font-weight:600; letter-spacing:.22em}
+  .dot{width:10px; height:10px; border-radius:50%; border:2px solid var(--accent); box-shadow:0 0 12px -1px var(--accent)}
+  .links{display:flex; align-items:center; gap:26px; letter-spacing:.04em}
+  .links a{color:var(--muted)} .links a:hover{color:var(--ink)}
+  .links .here{color:var(--ink)}
+
+  /* buttons */
+  .btn{display:inline-block; border:1px solid var(--accent); color:var(--ink); border-radius:12px; padding:14px 24px; font-weight:600; white-space:nowrap; transition:border-color .15s}
+  .btn:hover{border-color:var(--accent-hi)}
+
+  h1,h2,h3{margin:0; font-weight:600; letter-spacing:-.02em}
+  .display{font-size:clamp(44px,6.4vw,72px); line-height:.96; letter-spacing:-.025em}
+  .h2{font-size:clamp(34px,4.4vw,46px); line-height:1}
+  .muted{color:var(--muted)}
+
+  /* hero */
+  .hero{display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:40px; padding:64px 0 88px}
+  .hero p{color:var(--muted); max-width:34em; margin:26px 0 0; font-size:15px}
+  .form{display:flex; gap:10px; margin-top:36px; max-width:470px}
+  .form input{flex:1; min-width:0; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px 16px; color:var(--ink); font:inherit; outline:none}
+  .form input::placeholder{color:var(--muted)}
+  .glyph-hero{display:flex; justify-content:center; align-items:center}
+  #gy{width:100%; max-width:560px; height:auto; aspect-ratio:1/1; filter:drop-shadow(0 0 48px rgba(232,106,46,.14))}
+
+  /* section heads */
+  .sec{padding:84px 0}
+  .sec-head{text-align:center; margin-bottom:56px}
+  .sec-head p{color:var(--muted); max-width:52em; margin:16px auto 0}
+
+  /* how it works */
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:34px}
+  .scene{height:196px; display:flex; align-items:center; justify-content:center; margin-bottom:20px}
+  .num{color:var(--muted); font-weight:600; margin-bottom:6px}
+  .step h3{font-size:15px; margin-bottom:6px}
+  .step p{color:var(--muted); margin:0}
+  .type-line{width:100%; text-align:center}
+  .caret{width:2px; height:19px; background:var(--accent); display:inline-block; margin-left:2px; vertical-align:-3px; animation:blink 1.05s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .rule{border-bottom:1px solid var(--line); margin-top:16px}
+  .swatches{display:flex; align-items:center; gap:14px}
+  .plate{background:var(--plate); border-radius:14px; display:flex; align-items:center; justify-content:center}
+  .plate.sel{width:96px; height:96px; padding:9px; box-shadow:0 0 0 2px var(--accent), 0 0 0 6px rgba(232,106,46,.16)}
+  .plate.sm{width:74px; height:74px; padding:8px; opacity:.7}
+  .tee{position:relative; width:180px; height:172px}
+  .tee img{position:absolute; left:50%; top:44%; transform:translate(-50%,-50%); width:72px; height:72px}
+  .phone{width:120px; height:196px; border:2px solid #3A4654; border-radius:22px; background:#0E1520; padding:7px}
+  .screen{width:100%; height:100%; border-radius:15px; background:#D6DBE2; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden}
+  .screen img{width:82px; height:82px}
+  .cnr{position:absolute; width:14px; height:14px}
+  .cnr.tl{left:15px; top:15px; border-left:2px solid var(--accent); border-top:2px solid var(--accent)}
+  .cnr.tr{right:15px; top:15px; border-right:2px solid var(--accent); border-top:2px solid var(--accent)}
+  .cnr.bl{left:15px; bottom:15px; border-left:2px solid var(--accent); border-bottom:2px solid var(--accent)}
+  .cnr.br{right:15px; bottom:15px; border-right:2px solid var(--accent); border-bottom:2px solid var(--accent)}
+
+  /* gallery */
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:30px 26px}
+  .card .glow{height:296px; display:flex; align-items:center; justify-content:center; background:var(--plate); border-radius:14px}
+  .card .glow img{width:250px; height:250px; object-fit:contain}
+  .lab{color:var(--muted); margin:16px 0 4px}
+  .txt{color:var(--ink); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+
+  /* footer */
+  footer{border-top:1px solid rgba(37,49,63,.6); padding:64px 0}
+  .foot{display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap}
+  .foot .muted{max-width:32em}
+
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr; padding:40px 0 56px}
+    .glyph-hero{order:-1}
+    #gy{max-width:400px}
+    .steps{grid-template-columns:repeat(2,1fr); gap:40px 28px}
+    .grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:560px){
+    .wrap{padding:0 20px}
+    .links{gap:16px}
+    .grid{grid-template-columns:1fr}
+    .form{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo"><span class="dot"></span>ORBLY</a>
+    <nav class="links">
+      <a href="#gallery">Gallery</a>
+      <a href="#how">How it works</a>
+      <span class="muted">orbly.to</span>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- hero -->
+  <section id="top" class="wrap hero">
+    <div>
+      <h1 class="display">Say what<br>you mean.</h1>
+      <p>Any message becomes a circular glyph — a key only a scan can open. Print it on a tee, a wall, a tote, a card. Anyone can see it; only the right eyes read it.</p>
+      <form class="form" onsubmit="return false">
+        <input type="email" placeholder="you@email.com" aria-label="Email address">
+        <a href="#" class="btn">Request early access</a>
+      </form>
+    </div>
+    <div class="glyph-hero">
+      <canvas id="gy" width="600" height="600"></canvas>
+    </div>
+  </section>
+
+  <!-- how it works -->
+  <section id="how" class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="h2">From a message to a mark, in four steps.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="scene">
+            <div class="type-line">
+              <span>Creativity is contagious, pass it on</span><span class="caret"></span>
+              <div class="rule"></div>
+            </div>
+          </div>
+          <div class="num">01</div><h3>Write</h3>
+          <p>A word, a line, or a whole note — whatever you want to keep.</p>
+        </div>
+        <div class="step">
+          <div class="scene">
+            <div class="swatches">
+              <div class="plate sel"><img src="assets/ps.png" alt=""></div>
+              <div class="plate sm"><img src="assets/g6.png" alt=""></div>
+              <div class="plate sm"><img src="assets/pm.png" alt=""></div>
+            </div>
+          </div>
+          <div class="num">02</div><h3>Choose a design</h3>
+          <p>The same message, four colourways. Pick the one that fits the piece.</p>
+        </div>
+        <div class="step">
+          <div class="scene">
+            <div class="tee">
+              <svg viewBox="0 0 200 190" width="180" height="171">
+                <path d="M100 20 C88 20 80 24 74 29 L44 45 C38 48 36 55 39 61 L47 76 C49 80 54 81 58 78 L64 74 L64 168 C64 173 68 177 73 177 L127 177 C132 177 136 173 136 168 L136 74 L142 78 C146 81 151 80 153 76 L161 61 C164 55 162 48 156 45 L126 29 C120 24 112 20 100 20 Z" fill="#C6CBD3" stroke="#8C95A0" stroke-width="1.5"/>
+                <path d="M86 23 C92 33 108 33 114 23" fill="none" stroke="#8C95A0" stroke-width="1.5"/>
+              </svg>
+              <img src="assets/ps.png" alt="">
+            </div>
+          </div>
+          <div class="num">03</div><h3>Print it anywhere</h3>
+          <p>On a tee, a cap, a wall, packaging — it reads as part of the design.</p>
+        </div>
+        <div class="step">
+          <div class="scene">
+            <div class="phone">
+              <div class="screen">
+                <img src="assets/ps.png" alt="">
+                <span class="cnr tl"></span><span class="cnr tr"></span><span class="cnr bl"></span><span class="cnr br"></span>
+              </div>
+            </div>
+          </div>
+          <div class="num">04</div><h3>Scan to reveal</h3>
+          <p>The meaning comes back — reworded, not letter-for-letter: <span style="color:var(--ink)">&ldquo;ideas are catching — pass them on.&rdquo;</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- gallery -->
+  <section id="gallery" class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="h2">Every word, its own glyph.</h2>
+        <p>Every message becomes its own mark — shown here across four colourways: signed, magnitude, semantic and muted.</p>
+      </div>
+      <div class="grid">
+        <div class="card"><div class="glow"><img src="assets/g1.png" alt="signed glyph"></div><div class="lab">Signed · Word</div><div class="txt">love</div></div>
+        <div class="card"><div class="glow"><img src="assets/g2.png" alt="magnitude glyph"></div><div class="lab">Magnitude · Sentence</div><div class="txt">The best thing to hold onto in life is each other.</div></div>
+        <div class="card"><div class="glow"><img src="assets/g3.png" alt="semantic glyph"></div><div class="lab">Semantic · Word</div><div class="txt">gravity</div></div>
+        <div class="card"><div class="glow"><img src="assets/g4.png" alt="muted glyph"></div><div class="lab">Muted · Sentence</div><div class="txt">She plays the violin every morning.</div></div>
+        <div class="card"><div class="glow"><img src="assets/g5.png" alt="signed glyph of a paragraph"></div><div class="lab">Signed · Paragraph</div><div class="txt">Quantum entanglement is a physical phenomenon where the state of each particle cannot be described independently of the others, even across a vast distance.</div></div>
+        <div class="card"><div class="glow"><img src="assets/g6.png" alt="semantic glyph of a phrase"></div><div class="lab">Semantic · Phrase</div><div class="txt">Creativity is contagious, pass it on.</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="logo"><span class="dot"></span>ORBLY</div>
+    <p class="muted" style="margin:0">A message you can print anywhere — and only the right eyes can read.</p>
+    <a href="#top" class="btn">Request early access</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var cv=document.getElementById('gy'); if(!cv)return;
+  var g=cv.getContext('2d'), W=cv.width, H=cv.height;
+  var RED=[217,83,25], BLUE=[46,134,200], RING='rgba(150,170,192,.3)';
+  var DATA=[-0.2205,-0.0394,-0.126,0.0394,0.2126,-0.1496,0.1811,0.0709,-0.2126,0.3307,-0.0472,-0.2913,0.3465,-0.126,-0.4803,0.4409,-0.4016,1.0,0.8031,-0.2283,0.0236,-0.0394,-0.2441,0.8504,-0.0709,0.2126,-0.3386,0.2362,-0.0315,-0.3701,-0.6142,-0.0945,-0.5354,-0.4016,0.1024,-0.1496,0.2835,-0.2835,-0.1102,0.2047,-0.1575,-0.2047,0.1496,0.0315,-0.0866,0.0551,0.685,-0.1024,0.5669,-0.1811,-0.1732,0.0787,0.063,0.126,-0.0315,-0.1575,-0.0945,0.1496,-0.063,-0.0945,-0.622,0.9685,-0.9843,0.1732,0.2205,0.1024,-0.0394,0.2441,-0.5039,-0.378,0.063,0.4252,-0.315,-0.0157,-0.0787,-0.1969,-0.063,-0.6142,0.2047,0.3465,0.0236,0.1732,0.315,0.0945,-0.2283,0.2756,-0.1181,-0.1654,-0.0472,0.0,0.1417,0.5354,-0.0709,0.2992,0.0945,-0.3937,-0.1969,0.0787,0.0709,0.1102,-0.2283,0.0157,-0.2677,-0.0945,0.3465,0.5827,-0.937,0.1496,0.126,0.0394,0.063,0.2126,0.0945,0.0551,-0.0157,-0.1417,0.2992,-0.1102,-0.2835,-0.1811,0.1654,-0.2677,-0.2598,-0.2598,-0.1575,0.0236,-0.1732,-0.1811,0.2913,-0.3071,0.2598,-0.3465,-0.1181,-0.3071,0.2047,0.1496,0.1102,0.1417,0.2441,-0.1575,-0.0709,-0.2126,-0.0472,-0.3622,-0.1969,0.063,0.1969,-0.1496,0.126,0.1339,0.1102,-0.0945,0.063,-0.1969,0.1024,0.2835,0.126,-0.0787,0.4173,-0.0079,0.2362,0.2362,-0.0394,-0.3543,-0.0315,-0.0315,-0.2677,-0.0945,-0.2992,-0.3071,-0.1339,0.1024,0.0394,-0.0787,0.2756,-0.1102,-0.378,0.0551,-0.2598,0.1811,0.0315,-0.1575,-0.1969,0.063,0.063,0.1732,0.0,0.1102,-0.126,-0.3701,-0.4252,-0.0079];
+  var d=DATA.length;
+  function fr(x){return x-Math.floor(x);}
+  var T=[];
+  for(var i=0;i<d;i++){var sv=DATA[i],m=Math.abs(sv);
+    T.push({m:m,s:sv>=0?1:-1,curl:(fr(Math.sin((i+1)*12.9898)*43758.5453)*2-1)*(0.5+1.7*m),ph:fr(Math.sin((i+1)*7.13)*9127.3)*6.283});}
+  var gap=0.42,start=-Math.PI/2+gap/2,step=(Math.PI*2-gap)/d,R=Math.min(W,H)*0.25,maxLen=Math.min(W,H)*0.185,t0=null;
+  g.lineCap='round'; g.lineJoin='round';
+  function frame(ts){
+    if(t0===null)t0=ts; var t=(ts-t0)/1000, ease=1-Math.pow(1-Math.min(1,t/1.35),3);
+    g.clearRect(0,0,W,H); g.save(); g.translate(W/2,H/2);
+    g.strokeStyle=RING; g.lineWidth=Math.max(1.2,Math.min(W,H)*0.0048);
+    g.beginPath(); g.arc(0,0,R,-Math.PI/2+gap/2,-Math.PI/2-gap/2+Math.PI*2); g.stroke();
+    for(var i=0;i<d;i++){var v=T[i]; if(v.m<0.06)continue;
+      var a=start+i*step, ow=v.s>0, sh=1+0.05*Math.sin(t*0.8+v.ph), len=v.m*maxLen*ease*sh;
+      var r0=ow?R+2:R-2, ang=ow?a:a+Math.PI, N=Math.max(6,Math.round(len/4)), seg=len/N;
+      var px=Math.cos(a)*r0, py=Math.sin(a)*r0, b=ow?RED:BLUE, k=0.42+0.62*v.m;
+      g.strokeStyle='rgb('+Math.round(b[0]*k)+','+Math.round(b[1]*k)+','+Math.round(b[2]*k)+')';
+      var baseW=(1.3+3.4*v.m)*(Math.min(W,H)/440);
+      for(var s=1;s<=N;s++){var tt=s/N;
+        ang+=(v.curl/N)*Math.pow(tt,0.6)*1.5;
+        var nx=px+Math.cos(ang)*seg, ny=py+Math.sin(ang)*seg;
+        g.lineWidth=Math.max(0.5, baseW*Math.pow(1-(s-0.5)/N,1.35));
+        g.beginPath(); g.moveTo(px,py); g.lineTo(nx,ny); g.stroke();
+        px=nx; py=ny;
+      }
+    }
+    g.restore(); requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
