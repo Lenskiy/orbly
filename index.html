@@ -44,7 +44,7 @@
   .muted{color:var(--muted)}
 
   /* hero */
-  .hero{display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:40px; padding:64px 0 88px; min-height:calc(100vh - 72px)}
+  .hero{display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:40px; padding:64px 0 88px; min-height:calc(100vh - 72px); min-height:calc(100svh - 72px)}
   .hero p{color:var(--muted); max-width:34em; margin:26px 0 0; font-size:15px}
   .form{display:flex; gap:10px; margin-top:36px; max-width:470px}
   .form input{flex:1; min-width:0; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px 16px; color:var(--ink); font:inherit; outline:none}
@@ -109,6 +109,12 @@
     .links{gap:16px}
     .grid{grid-template-columns:1fr}
     .form{flex-direction:column}
+    .hero{gap:22px; padding:20px 0 28px}
+    .display{font-size:8vw; line-height:1.06; white-space:nowrap}
+    .hb{display:none}
+    #gy{max-width:240px}
+    .hero p{margin-top:18px}
+    .form{margin-top:26px}
   }
 </style>
 </head>
@@ -129,7 +135,7 @@
   <!-- hero -->
   <section id="top" class="wrap hero">
     <div>
-      <h1 class="display">Say what<br>you mean.</h1>
+      <h1 class="display">Say what&nbsp;<br class="hb">you mean.</h1>
       <p>Any message becomes a circular glyph — a key only a scan can open. Print it on a tee, a wall, a tote, a card. Anyone can see it; only the right eyes read it.</p>
       <form class="form" onsubmit="return false">
         <input type="email" placeholder="you@email.com" aria-label="Email address">
