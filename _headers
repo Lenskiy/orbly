@@ -1,0 +1,21 @@
+# Cloudflare Pages honours this file at deploy time.
+# GitHub Pages ignores it (it is simply served as a static file), so it is a
+# no-op for the orbly.to deployment.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+# The glyph PNGs are not content-hashed — g3/g4 have already been swapped in
+# place once — so cache for a week, never `immutable`, and keep bumping the
+# ?v= query in index.html when an image is replaced.
+/assets/*
+  Cache-Control: public, max-age=604800
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
