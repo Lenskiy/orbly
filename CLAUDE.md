@@ -1,9 +1,14 @@
 # orbly
 
-Static site (`index.html` + `assets/`), no build step. Published from the repo
-root by two deployments: GitHub Pages (`Lenskiy/orbly` `main` → production,
-`orbly.to`) and Cloudflare Pages (`dworznik/orbly` → `*.pages.dev` plus branch
-previews). See the Deploy section of `README.md`.
+Static site (`index.html`, `404.html` + `assets/`), no build step. Published
+from the repo root by two deployments: GitHub Pages (`Lenskiy/orbly` `main` →
+production, `orbly.to`) and Cloudflare Pages (`dworznik/orbly` → `*.pages.dev`
+plus branch previews). See the Deploy section of `README.md`.
+
+Most static files live in `assets/`. The four brand assets referenced by fixed
+absolute paths — `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` and
+`og.png` — must stay at the repo root, and `og.png` is additionally referenced
+as the absolute URL `https://orbly.to/og.png` in the `og:image` tag.
 
 ## Agent skills
 
