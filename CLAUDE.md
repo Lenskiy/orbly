@@ -1,6 +1,9 @@
 # orbly
 
-Static site (`index.html` + `assets/`) published via GitHub Pages.
+Static site (`index.html` + `assets/`), no build step. Published from the repo
+root by two deployments: GitHub Pages (`Lenskiy/orbly` `main` → production,
+`orbly.to`) and Cloudflare Pages (`dworznik/orbly` → `*.pages.dev` plus branch
+previews). See the Deploy section of `README.md`.
 
 ## Agent skills
 
