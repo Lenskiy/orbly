@@ -374,7 +374,7 @@
     g.strokeStyle=RING; g.lineWidth=Math.max(1.2,Math.min(W,H)*0.0048);
     g.beginPath(); g.arc(0,0,R,-Math.PI/2+gap/2,-Math.PI/2-gap/2+Math.PI*2); g.stroke();
     for(var i=0;i<d;i++){var v=T[i]; if(v.m<0.06)continue;
-      var a=start+i*step, ow=v.s>0, sh=1+0.075*Math.sin(t*1.9+v.ph), len=v.m*maxLen*ease*sh;
+      var a=start+i*step, ow=v.s>0, sh=1+0.05*Math.sin(t*0.8+v.ph), len=v.m*maxLen*ease*sh;
       var r0=ow?R+2:R-2, ang=ow?a:a+Math.PI, N=Math.max(6,Math.round(len/4)), seg=len/N;
       var px=Math.cos(a)*r0, py=Math.sin(a)*r0, b=ow?RED:BLUE, k=0.42+0.62*v.m;
       g.strokeStyle='rgb('+Math.round(b[0]*k)+','+Math.round(b[1]*k)+','+Math.round(b[2]*k)+')';
