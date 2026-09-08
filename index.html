@@ -256,7 +256,13 @@
 <script>
 /* early-access form → Loops */
 (function(){
-  var LOOPS_ENDPOINT='https://app.loops.so/api/newsletter-form/REPLACE_ME';
+  /* Put the Loops newsletter form id here. It is the trailing segment of the
+     endpoint Loops shows in the form's publish panel:
+     https://app.loops.so/api/newsletter-form/<id>
+     Safe to commit — a Loops form id is public by design and ships in the page
+     source of every site using one. */
+  var LOOPS_FORM_ID='REPLACE_ME';
+  var LOOPS_ENDPOINT='https://app.loops.so/api/newsletter-form/'+LOOPS_FORM_ID;
   var OK='Thanks — you’re on the list.';
   var RATE_LIMITED='Too many tries — give it a minute.';
   var FAILED='Something went wrong. Try again?';
@@ -272,8 +278,11 @@
     msg.textContent='';                      // never leave a stale status up
     if(honeypot && honeypot.value) return;   // a bot filled it: silent no-op
 
-    if(LOOPS_ENDPOINT.indexOf('REPLACE_ME')!==-1){
-      console.error('[orbly] LOOPS_ENDPOINT still holds REPLACE_ME — put the real Loops form id in. Submission skipped.');
+    /* Shape check, not a comparison against the placeholder: a global
+       find-and-replace of REPLACE_ME would defeat the latter and silently
+       disable the form. */
+    if(!/^[a-z0-9]{16,}$/i.test(LOOPS_FORM_ID)){
+      console.error('[orbly] LOOPS_FORM_ID is not a valid Loops form id — submission skipped. Set it at the top of this script.');
       msg.textContent=FAILED; return;
     }
 
