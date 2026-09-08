@@ -26,8 +26,8 @@
     -webkit-font-smoothing:antialiased;
   }
   a{color:var(--ink); text-decoration:none}
-  .logo{display:flex; align-items:center; gap:11px; font-weight:600; letter-spacing:.22em}
-  .dot{width:10px; height:10px; border-radius:50%; border:2px solid var(--accent); box-shadow:0 0 12px -1px var(--accent)}
+  .logo{display:inline-flex; align-items:center; color:var(--ink)}
+  .logo svg{height:24px; width:auto}
   h1{margin:0; font-weight:600; letter-spacing:-.025em; font-size:clamp(44px,6.4vw,72px); line-height:.96}
   p{margin:0; color:var(--muted); max-width:34em}
   .btn{display:inline-block; border:1px solid var(--accent); border-radius:12px; padding:14px 24px; font-weight:600; transition:border-color .15s}
@@ -36,7 +36,15 @@
 </head>
 <body>
 
-<a href="/" class="logo"><span class="dot"></span>ORBLY</a>
+<a href="/" class="logo" aria-label="orbly">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="34 -780 2132 1000">
+  <path fill="#E86A2E" d="M34.0 -230.0Q34.0 -160.0 66.5 -105.5Q99.0 -51.0 155.5 -20.5Q212.0 10.0 282.0 10.0Q353.0 10.0 409.0 -20.5Q465.0 -51.0 497.5 -105.5Q530.0 -160.0 530.0 -230.0Q530.0 -301.0 497.5 -355.0Q465.0 -409.0 409.0 -439.5Q353.0 -470.0 282.0 -470.0Q212.0 -470.0 155.5 -439.5Q99.0 -409.0 66.5 -355.0Q34.0 -301.0 34.0 -230.0ZM145.0 -230.0Q145.0 -273.0 163.0 -306.0Q181.0 -339.0 212.0 -357.0Q243.0 -375.0 282.0 -375.0Q321.0 -375.0 352.0 -357.0Q383.0 -339.0 401.0 -306.0Q419.0 -273.0 419.0 -230.0Q419.0 -187.0 401.0 -154.5Q383.0 -122.0 352.0 -103.5Q321.0 -85.0 282.0 -85.0Q243.0 -85.0 212.0 -103.5Q181.0 -122.0 163.0 -154.5Q145.0 -187.0 145.0 -230.0Z"/>
+  <path fill="currentColor" d="M720.0 -460.0H613.0V0.0H720.0V-259.0Q720.0 -292.0 727.5 -316.5Q735.0 -341.0 752.0 -355.0Q769.0 -369.0 796.0 -369.0Q816.0 -369.0 829.5 -363.0Q843.0 -357.0 857.0 -345.0L910.0 -436.0Q894.0 -455.0 872.0 -463.0Q850.0 -471.0 825.0 -471.0Q790.0 -471.0 758.0 -446.0Q736.0 -429.0 720.0 -405.0Z"/>
+  <path fill="currentColor" d="M1069.0 -780.0H960.0V0.0H1069.0V-77.0Q1092.0 -41.0 1125.0 -19.0Q1169.0 10.0 1226.0 10.0Q1286.0 10.0 1337.0 -18.5Q1388.0 -47.0 1419.0 -101.0Q1450.0 -155.0 1450.0 -230.0Q1450.0 -306.0 1419.0 -359.5Q1388.0 -413.0 1337.0 -441.5Q1286.0 -470.0 1226.0 -470.0Q1169.0 -470.0 1125.0 -441.0Q1092.0 -419.0 1069.0 -383.0ZM1338.0 -230.0Q1338.0 -184.0 1319.0 -151.0Q1300.0 -118.0 1269.0 -101.0Q1238.0 -84.0 1200.0 -84.0Q1168.0 -84.0 1138.0 -101.0Q1108.0 -118.0 1088.5 -150.5Q1069.0 -183.0 1069.0 -230.0Q1069.0 -277.0 1088.5 -309.5Q1108.0 -342.0 1138.0 -359.0Q1168.0 -376.0 1200.0 -376.0Q1238.0 -376.0 1269.0 -359.0Q1300.0 -342.0 1319.0 -309.0Q1338.0 -276.0 1338.0 -230.0Z"/>
+  <path fill="currentColor" d="M1533.0 -780.0V0.0H1642.0V-780.0Z"/>
+  <path fill="currentColor" d="M2166.0 -460.0H2050.0L1931.0 -161.0L1810.0 -460.0H1686.0L1872.0 -54.0L1751.0 220.0H1866.0Z"/>
+  </svg>
+</a>
 <h1>404</h1>
 <p>Nothing scannable here. The page you were looking for does not exist.</p>
 <a href="/" class="btn">Back to Orbly</a>
