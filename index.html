@@ -74,9 +74,11 @@
   .plate.sm{width:74px; height:74px; padding:8px; opacity:.7}
   .tee{position:relative; width:180px; height:172px}
   .tee img{position:absolute; left:50%; top:44%; transform:translate(-50%,-50%); width:72px; height:72px}
-  .phone{width:120px; height:196px; border:2px solid #3A4654; border-radius:22px; background:#0E1520; padding:7px}
-  .screen{width:100%; height:100%; border-radius:15px; background:#D6DBE2; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden}
-  .screen img{width:82px; height:82px}
+  .phone{width:156px; height:196px; border:2px solid #3A4654; border-radius:22px; background:#0E1520; padding:7px}
+  .screen{width:100%; height:100%; border-radius:15px; background:#D6DBE2; position:relative; display:flex; flex-direction:column; overflow:hidden}
+  .scan{position:relative; flex:0 0 55%; display:flex; align-items:center; justify-content:center}
+  .scan img{width:76px; height:76px}
+  .decode{flex:1; margin:0 11px; padding-top:8px; border-top:1px solid #B7BFCB; color:#2A3542; font-size:9px; line-height:1.38; display:flex; align-items:center; text-align:left}
   .cnr{position:absolute; width:14px; height:14px}
   .cnr.tl{left:15px; top:15px; border-left:2px solid var(--accent); border-top:2px solid var(--accent)}
   .cnr.tr{right:15px; top:15px; border-right:2px solid var(--accent); border-top:2px solid var(--accent)}
@@ -196,15 +198,18 @@
         </div>
         <div class="step">
           <div class="num">04</div><h3>Scan to reveal</h3>
+          <p>Point a phone at it and the meaning comes back — reworded, not letter-for-letter.</p>
           <div class="scene">
             <div class="phone">
               <div class="screen">
-                <img src="assets/ps.png" alt="">
-                <span class="cnr tl"></span><span class="cnr tr"></span><span class="cnr bl"></span><span class="cnr br"></span>
+                <div class="scan">
+                  <img src="assets/ps.png" alt="">
+                  <span class="cnr tl"></span><span class="cnr tr"></span><span class="cnr bl"></span><span class="cnr br"></span>
+                </div>
+                <div class="decode">&ldquo;ideas are catching — pass them on.&rdquo;</div>
               </div>
             </div>
           </div>
-          <p style="margin-top:22px">The meaning comes back — reworded, not letter-for-letter: <span style="color:var(--ink)">&ldquo;ideas are catching — pass them on.&rdquo;</span></p>
         </div>
       </div>
     </div>
