@@ -14,6 +14,23 @@
 /assets/*
   Cache-Control: public, max-age=604800
 
+# Brand assets live at the site root because favicons, the Apple touch icon and
+# the OG image are referenced by fixed absolute paths. Like the glyph PNGs they
+# are not content-hashed, so cache for a week and never `immutable` — og.png in
+# particular gets regenerated in place, and scrapers are re-primed by hand
+# (Telegram @WebpageBot, the Facebook sharing debugger) rather than by a URL bump.
+/favicon.svg
+  Cache-Control: public, max-age=604800
+
+/favicon.ico
+  Cache-Control: public, max-age=604800
+
+/apple-touch-icon.png
+  Cache-Control: public, max-age=604800
+
+/og.png
+  Cache-Control: public, max-age=604800
+
 /
   Cache-Control: public, max-age=0, must-revalidate
 
