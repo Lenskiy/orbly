@@ -73,7 +73,7 @@
   .form input{flex:1; min-width:0; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px 16px; color:var(--ink); font:inherit; outline:none}
   .form input::placeholder{color:var(--muted)}
   /* honeypot: off-screen rather than display:none, so bots still fill it */
-  .form .hp{position:absolute; width:1px; height:1px; padding:0; margin:-1px; border:0; overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap}
+  .hp{position:absolute; width:1px; height:1px; padding:0; margin:-1px; border:0; overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap}
   /* width:100% (not flex-basis) forces its own line in the row layout without
      becoming a height once .form goes flex-direction:column on mobile */
   /* deliberately NOT display:none when empty: an aria-live region that is
@@ -123,6 +123,16 @@
   .lab{color:var(--muted); margin:6px 0 4px}
   .txt{color:var(--ink); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
 
+  /* for-brands form */
+  .bform{max-width:520px; margin:0 auto; display:flex; flex-direction:column; gap:12px}
+  .bform .brow{display:flex; gap:12px}
+  .bform input, .bform textarea{width:100%; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:13px 15px; color:var(--ink); font:inherit; outline:none}
+  .bform input::placeholder, .bform textarea::placeholder{color:var(--muted)}
+  .bform textarea{resize:vertical; min-height:96px}
+  .bform .btn{align-self:flex-start}
+  .bform .form-msg{margin:0; color:var(--muted); font-size:14px}
+  @media(max-width:560px){ .bform .brow{flex-direction:column} }
+
   /* footer */
   footer{border-top:1px solid rgba(37,49,63,.6); padding:64px 0}
   .foot{display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap}
@@ -171,9 +181,9 @@
       </svg>
     </a>
     <nav class="links">
-      <a href="#top">orbly.to</a>
       <a href="#how">How it works</a>
       <a href="#gallery">Gallery</a>
+      <a href="#brands">For brands</a>
     </nav>
   </div>
 </header>
@@ -271,6 +281,27 @@
         <div class="card"><div class="glow"><img src="assets/g5.png?v=3" alt="signed glyph of a paragraph"></div><div class="lab">Signed · Paragraph</div><div class="txt">&ldquo;Quantum entanglement is a physical phenomenon where the state of each particle cannot be described independently of the others, even across a vast distance.&rdquo;</div></div>
         <div class="card"><div class="glow"><img src="assets/g6.png?v=3" alt="semantic glyph of a phrase"></div><div class="lab">Semantic · Phrase</div><div class="txt">&ldquo;Creativity is contagious, pass it on.&rdquo;</div></div>
       </div>
+    </div>
+  </section>
+
+  <!-- for brands -->
+  <section id="brands" class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="h2">For brands</h2>
+        <p>Planning a campaign, an event, a product drop? Encode your message as an Orbly mark people scan to unlock — on packaging, merch, posters, invites. Tell us what you have in mind.</p>
+      </div>
+      <form id="brand-form" class="bform">
+        <div class="brow">
+          <input name="name" required autocomplete="name" placeholder="Your name" aria-label="Your name">
+          <input name="company" autocomplete="organization" placeholder="Company" aria-label="Company">
+        </div>
+        <input type="email" name="email" required autocomplete="email" placeholder="you@company.com" aria-label="Email">
+        <textarea name="message" placeholder="What are you planning?" aria-label="What are you planning"></textarea>
+        <input type="text" class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="submit" class="btn">Send inquiry</button>
+        <p class="form-msg" aria-live="polite"></p>
+      </form>
     </div>
   </section>
 </main>
@@ -389,6 +420,47 @@
     g.restore(); requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+})();
+</script>
+<script>
+/* for-brands inquiry → Formspree */
+(function(){
+  /* Put the Formspree form id here — the trailing segment of the endpoint
+     Formspree gives you: https://formspree.io/f/<id>. Safe to commit (public). */
+  var FORMSPREE_ID='REPLACE_ME';
+  var ENDPOINT='https://formspree.io/f/'+FORMSPREE_ID;
+  var OK='Thanks — we’ll be in touch.';
+  var FAILED='Something went wrong. Try again, or email us.';
+
+  var form=document.getElementById('brand-form'); if(!form)return;
+  var btn=form.querySelector('button[type=submit]');
+  var msg=form.querySelector('.form-msg');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    msg.textContent='';
+    /* Shape check (not equality) so a find-and-replace of REPLACE_ME can't
+       silently leave a broken endpoint live. */
+    if(!/^[a-z0-9]{6,}$/i.test(FORMSPREE_ID)){
+      console.error('[orbly] FORMSPREE_ID is not set — inquiry not sent. Set it at the top of this script.');
+      msg.textContent=FAILED; return;
+    }
+    btn.disabled=true;
+    fetch(ENDPOINT,{
+      method:'POST',
+      headers:{'Accept':'application/json'},
+      body:new FormData(form)
+    }).then(function(r){
+      return r.json().catch(function(){return null;}).then(function(data){
+        if(r.ok){ form.reset(); msg.textContent=OK; }
+        else { msg.textContent=(data && data.errors && data.errors[0] && data.errors[0].message) || FAILED; }
+      });
+    }).catch(function(){
+      msg.textContent=FAILED;
+    }).then(function(){
+      btn.disabled=false;
+    });
+  });
 })();
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "69cb12ee427040d3b96ef7bd4abb1b3c"}'></script><!-- End Cloudflare Web Analytics -->
