@@ -31,7 +31,7 @@
   .logo{display:flex; align-items:center; gap:11px; font-weight:600; letter-spacing:.22em}
   .dot{width:10px; height:10px; border-radius:50%; border:2px solid var(--accent); box-shadow:0 0 12px -1px var(--accent)}
   .links{display:flex; align-items:center; gap:26px; letter-spacing:.04em}
-  .links a{color:var(--muted)} .links a:hover{color:var(--ink)}
+  .links a{color:var(--muted); padding:11px 4px} .links a:hover{color:var(--ink)}
   .links .here{color:var(--ink)}
 
   /* buttons */
@@ -78,7 +78,7 @@
   .screen{width:100%; height:100%; border-radius:15px; background:#D6DBE2; position:relative; display:flex; flex-direction:column; overflow:hidden}
   .scan{position:relative; flex:0 0 55%; display:flex; align-items:center; justify-content:center}
   .scan img{width:76px; height:76px}
-  .decode{flex:1; margin:0 11px; padding-top:8px; border-top:1px solid #B7BFCB; color:#2A3542; font-size:9px; line-height:1.38; display:flex; align-items:center; text-align:left}
+  .decode{flex:1; margin:0 11px; padding-top:8px; border-top:1px solid #B7BFCB; color:#242E3A; font-size:10.5px; font-weight:500; line-height:1.35; display:flex; align-items:center; text-align:left}
   .cnr{position:absolute; width:14px; height:14px}
   .cnr.tl{left:15px; top:15px; border-left:2px solid var(--accent); border-top:2px solid var(--accent)}
   .cnr.tr{right:15px; top:15px; border-right:2px solid var(--accent); border-top:2px solid var(--accent)}
@@ -115,7 +115,7 @@
   }
   @media(max-width:560px){
     .wrap{padding:0 20px}
-    .links{gap:16px}
+    .links{gap:8px}
     .grid{grid-template-columns:1fr}
     .form{flex-direction:column}
     .hero{gap:16px; padding-top:12px; padding-bottom:20px}
@@ -177,9 +177,10 @@
           <p>The same message, four colourways. Pick the one that fits the piece.</p>
           <div class="scene">
             <div class="swatches">
-              <div class="plate sel"><img src="assets/ps.png" alt=""></div>
-              <div class="plate sm"><img src="assets/g6.png" alt=""></div>
-              <div class="plate sm"><img src="assets/pm.png" alt=""></div>
+              <div class="plate sel"><img src="assets/ps.png" alt="signed colourway"></div>
+              <div class="plate sm"><img src="assets/pmag.png" alt="magnitude colourway"></div>
+              <div class="plate sm"><img src="assets/g6.png" alt="semantic colourway"></div>
+              <div class="plate sm"><img src="assets/pm.png" alt="muted colourway"></div>
             </div>
           </div>
         </div>
