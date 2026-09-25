@@ -165,6 +165,20 @@
     .hero p{margin-top:16px}
     .form{margin-top:22px}
   }
+  /* Glyph lightbox */
+  .card .glow{cursor:zoom-in}
+  .lb{position:fixed; inset:0; z-index:200; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:16px; padding:24px; background:rgba(6,9,16,.94); backdrop-filter:blur(2px); opacity:0; transition:opacity .18s}
+  .lb.open{opacity:1}
+  .lb[hidden]{display:none}
+  .lb-inner{position:relative}
+  .lb-plate{background:var(--plate); border-radius:18px; padding:18px; display:flex; align-items:center; justify-content:center}
+  .lb-plate img{display:block; width:min(78vw,560px); height:auto; max-height:70vh; object-fit:contain}
+  .lb-cap{text-align:center; max-width:560px}
+  .lb-lab{color:var(--accent); font-weight:600; letter-spacing:.02em}
+  .lb-txt{color:var(--ink); opacity:.82; font-size:15px; margin-top:4px}
+  .lb-close{position:absolute; top:-14px; right:-14px; width:40px; height:40px; border-radius:50%; border:1px solid var(--line);
+            background:var(--panel); color:var(--ink); font-size:22px; line-height:36px; cursor:pointer}
 </style>
 </head>
 <body>
@@ -413,5 +427,42 @@
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "69cb12ee427040d3b96ef7bd4abb1b3c"}'></script><!-- End Cloudflare Web Analytics -->
 <!-- GoatCounter --><script data-goatcounter="https://orbly.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script><!-- End GoatCounter -->
+<div id="lightbox" class="lb" hidden role="dialog" aria-modal="true" aria-label="Glyph preview">
+  <div class="lb-inner">
+    <button type="button" class="lb-close" id="lbClose" aria-label="Close preview">&times;</button>
+    <div class="lb-plate"><img id="lbImg" src="" alt=""></div>
+  </div>
+  <div class="lb-cap"><div class="lb-lab" id="lbLab"></div><div class="lb-txt" id="lbTxt"></div></div>
+</div>
+<script>
+/* Click a gallery glyph → show it larger in an overlay. */
+(function(){
+  var lb=document.getElementById('lightbox');
+  if(!lb) return;
+  var lbImg=document.getElementById('lbImg'), lbLab=document.getElementById('lbLab'), lbTxt=document.getElementById('lbTxt');
+  function open(card){
+    var img=card.querySelector('img'); if(!img) return;
+    lbImg.src=img.src; lbImg.alt=img.alt||'';
+    var lab=card.querySelector('.lab'), txt=card.querySelector('.txt');
+    lbLab.textContent=lab?lab.textContent:''; lbTxt.textContent=txt?txt.textContent:'';
+    lb.hidden=false; requestAnimationFrame(function(){ lb.classList.add('open'); });
+    document.body.style.overflow='hidden';
+  }
+  function close(){
+    lb.classList.remove('open'); document.body.style.overflow='';
+    setTimeout(function(){ lb.hidden=true; }, 180);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.grid .card'), function(card){
+    var target=card.querySelector('.glow')||card;
+    target.style.cursor='zoom-in';
+    target.setAttribute('role','button'); target.setAttribute('tabindex','0');
+    target.addEventListener('click', function(){ open(card); });
+    target.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(card); } });
+  });
+  document.getElementById('lbClose').addEventListener('click', close);
+  lb.addEventListener('click', function(e){ if(e.target===lb) close(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !lb.hidden) close(); });
+})();
+</script>
 </body>
 </html>
