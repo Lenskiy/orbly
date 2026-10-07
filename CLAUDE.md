@@ -9,6 +9,8 @@ Most static files live in `assets/`. The four brand assets referenced by fixed
 absolute paths — `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` and
 `og.png` — must stay at the repo root, and `og.png` is additionally referenced
 as the absolute URL `https://orbly.to/og.png` in the `og:image` tag.
+`robots.txt` and `sitemap.xml` also live at the root, where crawlers look for
+them; add any new indexable page to `sitemap.xml`.
 
 ## Agent skills
 
