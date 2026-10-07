@@ -9,6 +9,8 @@ A single static page, no build step. Open `index.html` or serve the folder.
 index.html      one scrolling page: hero · how it works · gallery · footer
 404.html        not-found page (served by both GitHub Pages and Cloudflare)
 _headers        Cloudflare Pages caching + security headers
+robots.txt      allows all crawlers and points them at the sitemap
+sitemap.xml     the one indexable URL, https://orbly.to/ (/tee/ is a noindex redirect)
 assets/         glyph images (g1–g6, ps, pm)
 ```
 
